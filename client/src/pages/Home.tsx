@@ -6,6 +6,7 @@
  */
 
 import { useState, useEffect, useRef } from "react";
+import { Link } from "wouter";
 import { toast } from "sonner";
 
 // ─── Scroll Reveal Hook ───────────────────────────────────────────────────────
@@ -196,6 +197,7 @@ const categories = [
     num: "01",
     icon: "🏥",
     title: "Medicare & Health Savings",
+    href: "/medicare",
     tag: "HEALTH COVERAGE",
     color: "#1B2E5A",
     desc: "Maximize your Medicare benefits and discover supplemental coverage options that can save you thousands annually.",
@@ -205,6 +207,7 @@ const categories = [
     num: "02",
     icon: "💰",
     title: "Social Security Strategies",
+    href: "/social-security",
     tag: "RETIREMENT INCOME",
     color: "#D4521A",
     desc: "Learn proven strategies to maximize your Social Security benefits and optimize your claiming age for maximum lifetime income.",
@@ -214,6 +217,7 @@ const categories = [
     num: "03",
     icon: "📈",
     title: "Retirement Income Planning",
+    href: "/retirement-income",
     tag: "FINANCIAL SECURITY",
     color: "#2A5C3A",
     desc: "Build a sustainable income stream through smart IRA, 401(k), and pension strategies tailored for Americans 55+.",
@@ -223,6 +227,7 @@ const categories = [
     num: "04",
     icon: "🏛️",
     title: "Government Assistance Programs",
+    href: "/government-benefits",
     tag: "FEDERAL & STATE PROGRAMS",
     color: "#5C3A1B",
     desc: "Billions in federal and state assistance go unclaimed each year. We help you identify every program you've earned.",
@@ -232,6 +237,7 @@ const categories = [
     num: "05",
     icon: "📋",
     title: "Tax Reduction Strategies",
+    href: "/tax-savings",
     tag: "TAX SAVINGS",
     color: "#1B4A5C",
     desc: "Discover legal tax strategies specifically designed for retirees to minimize your tax burden and keep more of your money.",
@@ -241,6 +247,7 @@ const categories = [
     num: "06",
     icon: "⚖️",
     title: "Estate & Legal Planning",
+    href: "/estate-planning",
     tag: "WEALTH PROTECTION",
     color: "#3A1B5C",
     desc: "Protect your assets and ensure your wishes are honored with essential legal planning tools available to seniors.",
@@ -293,13 +300,13 @@ function CategoriesSection() {
                   </li>
                 ))}
               </ul>
-              <button
-                onClick={() => toast.info("Full article coming soon — subscribe to get notified!")}
-                className="font-body text-sm font-bold flex items-center gap-1 transition-colors hover:gap-2"
+              <Link
+                href={cat.href}
+                className="font-body text-sm font-bold flex items-center gap-1 transition-colors hover:gap-2 no-underline"
                 style={{ color: cat.color }}
               >
                 Learn More →
-              </button>
+              </Link>
             </div>
           ))}
         </div>
@@ -1038,20 +1045,17 @@ function Footer() {
             </h4>
             <ul className="space-y-2.5">
               {[
-                "🏥 Medicare & Health",
-                "💰 Social Security",
-                "📈 Retirement Income",
-                "🏛️ Government Benefits",
-                "📋 Tax Savings",
-                "⚖️ Estate Planning",
+                { icon: "🏥", label: "Medicare & Health", href: "/medicare" },
+                { icon: "💰", label: "Social Security", href: "/social-security" },
+                { icon: "📈", label: "Retirement Income", href: "/retirement-income" },
+                { icon: "🏛️", label: "Government Benefits", href: "/government-benefits" },
+                { icon: "📋", label: "Tax Savings", href: "/tax-savings" },
+                { icon: "⚖️", label: "Estate Planning", href: "/estate-planning" },
               ].map((item) => (
-                <li key={item}>
-                  <button
-                    onClick={() => toast.info("Full topic guide coming soon!")}
-                    className="font-body text-sm text-blue-300 hover:text-white transition-colors text-left"
-                  >
-                    {item}
-                  </button>
+                <li key={item.label}>
+                  <Link href={item.href} className="font-body text-sm text-blue-300 hover:text-white transition-colors no-underline">
+                    {item.icon} {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -1063,10 +1067,15 @@ function Footer() {
               Quick Links
             </h4>
             <ul className="space-y-2.5 mb-6">
-              {["How It Works", "Benefits Quiz", "Newsletter", "FAQs"].map((item) => (
-                <li key={item}>
-                  <a href={`#${item.toLowerCase().replace(" ", "-")}`} className="font-body text-sm text-blue-300 hover:text-white transition-colors no-underline">
-                    {item}
+              {[
+                { label: "How It Works", href: "/#how-it-works" },
+                { label: "Benefits Quiz", href: "/#quiz" },
+                { label: "Newsletter", href: "/#newsletter" },
+                { label: "FAQs", href: "/#faq" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <a href={item.href} className="font-body text-sm text-blue-300 hover:text-white transition-colors no-underline">
+                    {item.label}
                   </a>
                 </li>
               ))}
@@ -1097,15 +1106,10 @@ function Footer() {
             © 2024 Senior Benefits Digest. Not affiliated with the U.S. Government or any federal agency.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            {["Privacy Policy", "Terms & Conditions", "Do Not Sell My Data", "Contact Us"].map((link) => (
-              <button
-                key={link}
-                onClick={() => toast.info(`${link} page coming soon.`)}
-                className="font-body text-xs text-blue-400 hover:text-white transition-colors"
-              >
-                {link}
-              </button>
-            ))}
+            <Link href="/privacy" className="font-body text-xs text-blue-400 hover:text-white transition-colors no-underline">Privacy Policy</Link>
+            <Link href="/terms" className="font-body text-xs text-blue-400 hover:text-white transition-colors no-underline">Terms & Conditions</Link>
+            <button onClick={() => toast.info("Do Not Sell My Data request noted.")} className="font-body text-xs text-blue-400 hover:text-white transition-colors">Do Not Sell My Data</button>
+            <button onClick={() => toast.info("Contact: support@seniorbenefitsdigest.com")} className="font-body text-xs text-blue-400 hover:text-white transition-colors">Contact Us</button>
           </div>
         </div>
       </div>
