@@ -13,6 +13,8 @@ import TaxSavings from "./pages/TaxSavings";
 import EstatePlanning from "./pages/EstatePlanning";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import DoNotSell from "./pages/DoNotSell";
+import Contact from "./pages/Contact";
 
 function Router() {
   return (
@@ -28,6 +30,8 @@ function Router() {
       {/* Legal Pages */}
       <Route path="/privacy" component={Privacy} />
       <Route path="/terms" component={Terms} />
+      <Route path="/do-not-sell" component={DoNotSell} />
+      <Route path="/contact" component={Contact} />
       {/* Fallback */}
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />

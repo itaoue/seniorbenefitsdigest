@@ -1108,8 +1108,8 @@ function Footer() {
           <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/privacy" className="font-body text-xs text-blue-400 hover:text-white transition-colors no-underline">Privacy Policy</Link>
             <Link href="/terms" className="font-body text-xs text-blue-400 hover:text-white transition-colors no-underline">Terms & Conditions</Link>
-            <button onClick={() => toast.info("Do Not Sell My Data request noted.")} className="font-body text-xs text-blue-400 hover:text-white transition-colors">Do Not Sell My Data</button>
-            <button onClick={() => toast.info("Contact: support@seniorbenefitsdigest.com")} className="font-body text-xs text-blue-400 hover:text-white transition-colors">Contact Us</button>
+            <Link href="/do-not-sell" className="font-body text-xs text-blue-400 hover:text-white transition-colors no-underline">Do Not Sell My Data</Link>
+            <Link href="/contact" className="font-body text-xs text-blue-400 hover:text-white transition-colors no-underline">Contact Us</Link>
           </div>
         </div>
       </div>
