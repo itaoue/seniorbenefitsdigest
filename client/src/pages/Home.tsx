@@ -9,6 +9,23 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { toast } from "sonner";
 
+// ─── Subscribe API helper ─────────────────────────────────────────────────────
+function subscribeToApi(email: string, source: string, firstName?: string) {
+  const params = new URLSearchParams(window.location.search);
+  fetch("/api/subscribe", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
+      first_name: firstName || null,
+      source,
+      utm_source: params.get("utm_source"),
+      utm_medium: params.get("utm_medium"),
+      utm_campaign: params.get("utm_campaign"),
+    }),
+  }).catch((err) => console.error("subscribe failed:", err));
+}
+
 // ─── Scroll Reveal Hook ───────────────────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
@@ -380,6 +397,7 @@ function NewsletterSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
+    subscribeToApi(email, "home-newsletter", firstName);
     setSubmitted(true);
     toast.success("Welcome to Senior Benefits Digest! Check your inbox for your first issue.");
   };
@@ -679,6 +697,7 @@ function FinalCTASection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
+    subscribeToApi(email, "home-final-cta");
     setSubmitted(true);
     toast.success("You're subscribed! Your first digest arrives this Tuesday.");
   };
@@ -881,6 +900,7 @@ function HeroSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
+    subscribeToApi(email, "home-hero");
     setSubmitted(true);
     toast.success("Welcome! Your first digest arrives this Tuesday.");
   };
@@ -1000,6 +1020,8 @@ function Footer() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email) return;
+    subscribeToApi(email, "home-footer");
     toast.success("Subscribed! Your first digest arrives this Tuesday.");
     setEmail("");
   };
