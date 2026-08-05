@@ -29,6 +29,7 @@ async function initDb() {
       created_at TIMESTAMPTZ DEFAULT now()
     );
   `);
+  await pool.query(`ALTER TABLE subscribers ADD COLUMN IF NOT EXISTS first_name TEXT;`);
   console.log("subscribers table ready");
 }
 
@@ -58,11 +59,12 @@ async function startServer() {
       }
 
       await pool.query(
-        `INSERT INTO subscribers (email, source, utm_source, utm_medium, utm_campaign, ip, user_agent)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)
+        `INSERT INTO subscribers (email, first_name, source, utm_source, utm_medium, utm_campaign, ip, user_agent)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
          ON CONFLICT (email) DO NOTHING`,
         [
           email,
+          body.first_name || null,
           body.source || null,
           body.utm_source || null,
           body.utm_medium || null,
